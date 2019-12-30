@@ -30,7 +30,8 @@ public class ChatClient extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    String user;
+    String user; //nome dell'utente
+    String sesso; //il sesso dell'utente
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
                                         throws ServletException, IOException {
         
@@ -58,7 +59,13 @@ public class ChatClient extends HttpServlet {
             htmlHead(out,new String[]{"/WebChat/w3.css"},"Chat Window");
             javascriptAddons(out,new String[]{"/WebChat/chatVisibility.js","/WebChat/chatSocket.js"});
             //request.getRequestDispatcher("/WebChat/loginForm.html").include(request, response);
-            chatCore(out,"https://www.iispeano.edu.it/", user);
+            String relativeWebPath = "chatBoard.html";
+String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
+System.out.println(absoluteDiskPath);
+
+            request.getRequestDispatcher("chatBoard.html").include(request, response);
+
+            chatCore(out,"https://www.iispeano.edu.it/", user, sesso);
             out.println("</html>");
         }
     }
@@ -93,8 +100,9 @@ public class ChatClient extends HttpServlet {
             throws ServletException, IOException {
         user=null;
         System.out.println("POST request received");
-        System.out.println(request);
+        //System.out.println(request);
         user = request.getParameter("name");
+        sesso = request.getParameter("sex");
         System.out.println(user);
         //processRequest(request, response);
     }
@@ -143,10 +151,13 @@ public class ChatClient extends HttpServlet {
      * Core HTML for the Chat Window
      * @param printWriter PrintWriter to use when calling the method
      * @param exitLink Link to direct user to upon closing chat
+     * @param user
+     * @param sesso
      */
-    public static void chatCore (PrintWriter printWriter, String exitLink, String user){
+    public static void chatCore (PrintWriter printWriter, String exitLink, String user, String sesso){
         System.out.println("CORE-user: "+user);
         printWriter.println("<body onload='onEntry(\""+user+"\");'>");
+        printWriter.println("<div id=\"user\">"+user+"</div>");
 
         
 //        printWriter.println("<form name=\"loginName\" action=\"javascript:enterChatroom()\" id=\"loginForm\">");
@@ -156,12 +167,16 @@ public class ChatClient extends HttpServlet {
 //        printWriter.println("</form>");
         printWriter.println("<div id=\"backdrop\"> ");
         printWriter.println("<div class=\"w3-card\" id=\"menu\">");
-        printWriter.println("<p class=\"welcome\"> Welcome, my lord <b id=\""+ user + "\">"+user+"</b> </p>");
+        if(sesso.equals("she")) {
+           printWriter.println("<p class=\"welcome\"> Welcome, my lady <b id=\""+ user + "\"><script>document.write(document.getElementById(\"user\").innerHTML);</script></b> </p>");
+        } else {
+           printWriter.println("<p class=\"welcome\"> Welcome, my lord <b id=\""+ user + "\"><script>document.write(document.getElementById(\"user\").innerHTML);</script></b> </p>");
+        }
         printWriter.println("</div>");
         printWriter.println("<div class=\"w3-card\" id=\"userList\">---Users---</div>");
         printWriter.println("<div class=\"w3-card\" id=\"chatBox\">------------------------------ Chat ------------------------------<br></div>");
         printWriter.println("<br style=\"clear:both;\"/>");
-        printWriter.println("<form class=\"w3-card\" name=\"message\" action=\"javascript:onSendMessage()\" id=\"chatmsg\">");
+        printWriter.println("<form class=\"w3-card\" name=\"message\" action='javascript:onSendMessage(\""+user+"\")' id=\"chatmsg\">");
         printWriter.println("<input name=\"usermsg\" type=\"text\" id=\"usermsg\" size=\"100\"/>");
         printWriter.println("<input class=\"w3-button w3-green\" name=\"sendmsg\" type=\"submit\" id=\"sendmsg\" value=\"Send\"/>");
         printWriter.println("<button class=\"w3-button w3-red\" onclick=\"window.close()\">Close</button>");
