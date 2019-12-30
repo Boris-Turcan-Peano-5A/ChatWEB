@@ -21,12 +21,20 @@ function onEntry(sex, name){
             UL.innerHTML = '<font size="+2" style="display:inline-block">User List: </font>' + newUL;
         } else if (e.data.substring(0,8).localeCompare("rmUser::")===0){ //nel caso un utente si sia disconnesso
             var MSG=document.getElementById("chatBox");
-            var msg = "<div style='background-color:orange;display:inline-block;box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);border-radius: 5px'>" + e.data.substring(13) + " si e' DISCONNESSO</div>";
+            var sex = e.data.substring(8,11);
+            var name = e.data.substring(13);
+            var msg = "DISCONNESSO";
+            if(sex == "lei") { msg = "DISCONNESSA"; }
+            var msg = "<div style='background-color:orange;display:inline-block;box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);border-radius: 5px'>" + name + " si e' "+msg+"</div>";
             MSG.innerHTML = MSG.innerHTML + msg + "<br>";
             overflowFix();
         } else if (e.data.substring(0,9).localeCompare("newUser::")===0){ //nel caso un nuovo utente si sia connesso
             var MSG=document.getElementById("chatBox");
-            var msg = "<div style='background-color:orange;display:inline-block;box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);border-radius: 5px'>" + e.data.substring(14) + " e' ENTRATO</div>";
+            var sex = e.data.substring(9,12);
+            var name = e.data.substring(14);
+            var msg = "ENTRATO";
+            if(sex == "lei") { msg = "ENTRATA"; }
+            var msg = "<div style='background-color:orange;display:inline-block;box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);border-radius: 5px'>" + name + " e' "+msg+"</div>";
             MSG.innerHTML = MSG.innerHTML + msg + "<br>";
             overflowFix();
         }else { //in tutti gli altri casi lo considero un messaggio tra utenti

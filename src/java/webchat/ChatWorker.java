@@ -4,13 +4,8 @@ package webchat;
  * @author Prof-Matteo-Palitto-Peano
  */
 import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;

@@ -33,14 +33,14 @@
 
           <% if ( sex.equals("lui") ) { %>
   <footer class="w3-container w3-blue">
-     <div style="white-space: nowrap">
+     <div style="white-space: nowrap; width: 100%;">
             <div style="display:inline-block"><img src="/WebChat/img_lui.png" alt="Avatar" height="40" width="40"><%out.print(name);%></div>
           <% } else { %>
   <footer class="w3-container w3-pink">
-     <div style="white-space: nowrap">
+     <div style="white-space: nowrap; width: 100%;">
             <div style="display:inline-block"><img src="/WebChat/img_lei.png" alt="Avatar" height="40" width="40"><%out.print(name);%></div>
           <% } %>
-          <input name="usermsg" type="text" id="usermsg" size="50" style="display:inline-block" onkeypress="return onEnterSendMessage(event)"/>
+          <input name="usermsg" type="text" id="usermsg" style="display:inline-block; width: 50%;" onkeypress="return onEnterSendMessage(event)"/>
           <button class="w3-button w3-green" onclick="onSendMessage('<%out.print(sex);%>', '<%out.print(name);%>')" style="display:inline-block"/>Send</button>
           <button class="w3-button w3-red" onclick="window.location.assign('/WebChat')" style="display:inline-block">Exit</button>
      </div>
