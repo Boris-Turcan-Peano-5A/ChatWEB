@@ -6,7 +6,8 @@ var connection;
 function onEntry(sex, name){
     //alert(sex+" "+name);
     // stabilisci una nuova connessione con il server via WebSocket
-    connection = new WebSocket("ws://localhost:8080/WebChat/WebSocket");
+    var loc = window.location;
+    connection = new WebSocket("ws://"+loc.host+"/WebChat/WebSocket");
     // set onopen WebSocket action to send the login name to the Server
     connection.onopen = function (e){ connection.send("newUser::"+sex+"::"+name); };
 
