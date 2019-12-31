@@ -16,7 +16,7 @@
     String name=request.getParameter("name");
     String sex=request.getParameter("sex");   
 %>
-<body onload="onEntry('<%out.print(sex);%>', '<%out.print(name);%>')">
+<body onload='onEntry("<% out.print(sex); %>", "<% out.print(name); %>")'>
 <div class="w3-row w3-white" style="margin-left: 22px; padding-top: 44px; margin-right: 22px">
 <!--div class="w3-card-4 xtest w3-col m8"-->
 <div class="w3-card-4">
@@ -41,7 +41,7 @@
             <div style="display:inline-block"><img src="/WebChat/img_lei.png" alt="Avatar" height="40" width="40"><%out.print(name);%></div>
           <% } %>
           <input name="usermsg" type="text" id="usermsg" style="display:inline-block; width: 50%;" onkeypress="return onEnterSendMessage(event)"/>
-          <button class="w3-button w3-green" onclick="onSendMessage('<%out.print(sex);%>', '<%out.print(name);%>')" style="display:inline-block"/>Send</button>
+          <button class="w3-button w3-green" onclick="onSendMessage()" style="display:inline-block"/>Send</button>
           <button class="w3-button w3-red" onclick="window.location.assign('/WebChat')" style="display:inline-block">Exit</button>
      </div>
   </footer>

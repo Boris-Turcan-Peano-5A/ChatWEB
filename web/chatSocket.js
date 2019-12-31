@@ -3,7 +3,10 @@
  * 
  */
 var connection;
+var name, sex;
 function onEntry(sex, name){
+    this.name = name;
+    this.sex = sex;
     //alert(sex+" "+name);
     // stabilisci una nuova connessione con il server via WebSocket
     var loc = window.location;
@@ -47,7 +50,7 @@ function onEntry(sex, name){
 }
 
 // Usa WebSocket per inviare il messaggio al server
-function onSendMessage(sex, name){
+function onSendMessage(){
   var msg = document.getElementById("usermsg").value;
       if(msg == "") alert("assicurati di inserire il testo da inviare");
       else {
@@ -70,7 +73,7 @@ function overflowFix(){
 //quando viene premuto il tasto ENTER/INVIO su tastiera, invia messaggio
 function onEnterSendMessage(e) {
     if (e.keyCode === 13) {
-        onSendMessage('<%out.print(sex);%>', '<%out.print(name);%>');
+        onSendMessage(sex, name);
         return false;
     }
 }
